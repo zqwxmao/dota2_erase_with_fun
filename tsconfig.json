@@ -4,7 +4,7 @@
     "module": "none",
     "lib": ["ES2017"],
     "types": ["panorama-types"],
-    "outDir": "./content/panorama/scripts/custom_game",
+    "outDir": "./panorama/scripts/custom_game",
     "rootDir": "./src/panorama",
     "strict": true,
     "noImplicitAny": true,

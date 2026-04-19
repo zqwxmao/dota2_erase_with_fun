@@ -1,36 +1,93 @@
--- Generated from template
+require("match3_game")
 
-if CAddonTemplateGameMode == nil then
-	CAddonTemplateGameMode = class({})
+if CMatch3GameMode == nil then
+    CMatch3GameMode = class({})
 end
 
-function Precache( context )
-	--[[
-		Precache things we know we'll use.  Possible file types include (but not limited to):
-			PrecacheResource( "model", "*.vmdl", context )
-			PrecacheResource( "soundfile", "*.vsndevts", context )
-			PrecacheResource( "particle", "*.vpcf", context )
-			PrecacheResource( "particle_folder", "particles/folder", context )
-	]]
+function Precache(context)
 end
 
--- Create the game mode when we activate
 function Activate()
-	GameRules.AddonTemplate = CAddonTemplateGameMode()
-	GameRules.AddonTemplate:InitGameMode()
+    GameRules.Match3Mode = CMatch3GameMode()
+    GameRules.Match3Mode:InitGameMode()
 end
 
-function CAddonTemplateGameMode:InitGameMode()
-	print( "Template addon is loaded." )
-	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
+function CMatch3GameMode:InitGameMode()
+    GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_GOODGUYS, 1)
+    GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_BADGUYS, 0)
+    GameRules:SetCustomGameSetupAutoLaunchDelay(0)
+    GameRules:SetHeroSelectionTime(0)
+    GameRules:SetStrategyTime(0)
+    GameRules:SetShowcaseTime(0)
+    GameRules:SetPreGameTime(0)
+    GameRules:SetPostGameTime(30)
+    GameRules:SetStartingGold(0)
+    GameRules:SetGoldPerTick(0)
+    GameRules:SetGoldTickTime(999)
+    GameRules:SetTreeRegrowTime(999)
+    GameRules:SetUseUniversalShopMode(false)
+
+    local mode = GameRules:GetGameModeEntity()
+    mode:SetAnnouncerDisabled(true)
+    mode:SetFogOfWarDisabled(true)
+    mode:SetDaynightCycleDisabled(true)
+    mode:SetKillingSpreeAnnouncerDisabled(true)
+    mode:SetRemoveIllusionsOnDeath(true)
+    mode:SetBuybackEnabled(false)
+    mode:SetTopBarTeamValuesOverride(true)
+    mode:SetTopBarTeamValuesVisible(false)
+
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_TOP_TIMEOFDAY, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_TOP_HEROES, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_TOP_SCOREBOARD, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_ACTION_PANEL, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_ACTION_MINIMAP, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_PANEL, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_SHOP, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_ITEMS, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_QUICKBUY, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_COURIER, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_PROTECT, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_GOLD, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_SHOP_SUGGESTEDITEMS, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_TOP_MENU_BUTTONS, false)
+    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_KILL_CAM, false)
+
+    self.match3Games = {}
+
+    ListenToGameEvent("npc_spawned", Dynamic_Wrap(CMatch3GameMode, "OnNPCSpawned"), self)
+    CustomGameEventManager:RegisterListener("match3_swap_request", function(userID, data)
+        self:OnSwapRequest(data)
+    end)
+    CustomGameEventManager:RegisterListener("match3_request_board", function(userID, data)
+        self:OnRequestBoard(data)
+    end)
 end
 
--- Evaluate the state of the game
-function CAddonTemplateGameMode:OnThink()
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		--print( "Template addon script is running." )
-	elseif GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
-		return nil
-	end
-	return 1
+function CMatch3GameMode:OnNPCSpawned(event)
+    local unit = EntIndexToHScript(event.entindex)
+    if not unit or not unit:IsRealHero() then return end
+
+    local playerID = unit:GetPlayerID()
+    if self.match3Games[playerID] then return end
+
+    unit:AddNoDraw()
+
+    local game = Match3Game()
+    game:Init(playerID)
+    self.match3Games[playerID] = game
+end
+
+function CMatch3GameMode:OnSwapRequest(data)
+    local playerID = data.PlayerID
+    local game = self.match3Games[playerID]
+    if not game then return end
+    game:TrySwap(data.row1, data.col1, data.row2, data.col2)
+end
+
+function CMatch3GameMode:OnRequestBoard(data)
+    local playerID = data.PlayerID
+    local game = self.match3Games[playerID]
+    if not game then return end
+    game:SyncBoardToClient()
 end

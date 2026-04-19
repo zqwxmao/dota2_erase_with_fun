@@ -1,0 +1,140 @@
+.match3-root {
+  width: 100%;
+  height: 100%;
+}
+
+.background-overlay {
+  width: 100%;
+  height: 100%;
+  position: 0px 0px 0px;
+  background-color: #111118;
+  opacity: 0.95;
+}
+
+.game-container {
+  width: 100%;
+  height: 100%;
+  horizontal-align: center;
+  vertical-align: center;
+  flow-children: down;
+}
+
+/* ---- Header ---- */
+
+.header {
+  horizontal-align: center;
+  flow-children: down;
+  margin-bottom: 16px;
+}
+
+.game-title {
+  color: #daa520;
+  font-size: 42px;
+  font-weight: bold;
+  horizontal-align: center;
+  text-shadow: 0px 2px 4px 3 #000000;
+  margin-bottom: 8px;
+  letter-spacing: 4px;
+}
+
+.score-row {
+  horizontal-align: center;
+  flow-children: right;
+}
+
+.score-label {
+  color: #aaaaaa;
+  font-size: 24px;
+  margin-right: 12px;
+  vertical-align: center;
+}
+
+.score-value {
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: bold;
+  vertical-align: center;
+  text-shadow: 0px 0px 8px 3 #daa520;
+}
+
+.combo-label {
+  color: #ff6b35;
+  font-size: 28px;
+  font-weight: bold;
+  horizontal-align: center;
+  height: 36px;
+  text-shadow: 0px 0px 8px 3 #ff4500;
+}
+
+.message-label {
+  color: #ffd700;
+  font-size: 22px;
+  horizontal-align: center;
+  height: 30px;
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: 0.5s;
+}
+
+.message-label.visible {
+  opacity: 1;
+}
+
+/* ---- Board ---- */
+
+.board {
+  width: 644px;
+  height: 644px;
+  horizontal-align: center;
+  flow-children: right-wrap;
+  padding: 2px;
+  background-color: #1a1a2e;
+  border: 2px solid #333355;
+  border-radius: 8px;
+}
+
+.cell {
+  width: 62px;
+  height: 62px;
+  margin: 1px;
+  border-radius: 4px;
+  background-color: #16213e;
+  overflow: clip;
+  transition-property: opacity, pre-transform-scale2d, wash-color;
+  transition-duration: 0.15s;
+  transition-timing-function: ease-in-out;
+}
+
+.cell:hover {
+  wash-color: #ffffff30;
+  brightness: 1.2;
+}
+
+.cell.selected {
+  border: 2px solid #ffd700;
+  wash-color: #ffd70030;
+  animation-name: cell-pulse;
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.cell.matched {
+  opacity: 0;
+  pre-transform-scale2d: 0.5;
+}
+
+.cell Image {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+
+@keyframes 'cell-pulse' {
+  0% {
+    wash-color: #ffd70020;
+  }
+  100% {
+    wash-color: #ffd70060;
+  }
+}

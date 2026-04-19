@@ -1,0 +1,23 @@
+<root>
+    <styles>
+        <include src="file://{resources}/styles/custom_game/match3_ui.css" />
+    </styles>
+    <scripts>
+        <include src="file://{resources}/scripts/custom_game/match3_ui.js" />
+    </scripts>
+    <Panel class="match3-root" hittest="true">
+        <Panel class="background-overlay" />
+        <Panel class="game-container">
+            <Panel class="header">
+                <Label class="game-title" text="DOTA 2 MATCH-3" />
+                <Panel class="score-row">
+                    <Label class="score-label" text="SCORE" />
+                    <Label id="ScoreValue" class="score-value" text="0" />
+                </Panel>
+                <Label id="ComboLabel" class="combo-label" text="" />
+                <Label id="MessageLabel" class="message-label" text="" />
+            </Panel>
+            <Panel id="Board" class="board" />
+        </Panel>
+    </Panel>
+</root>

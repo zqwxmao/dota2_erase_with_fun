@@ -1,0 +1,3 @@
+<root>
+    <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/match3_ui.xml" />
+</root>
