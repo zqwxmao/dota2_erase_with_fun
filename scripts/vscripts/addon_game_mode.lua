@@ -37,21 +37,28 @@ function CMatch3GameMode:InitGameMode()
     mode:SetTopBarTeamValuesOverride(true)
     mode:SetTopBarTeamValuesVisible(false)
 
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_TOP_TIMEOFDAY, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_TOP_HEROES, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_TOP_SCOREBOARD, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_ACTION_PANEL, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_ACTION_MINIMAP, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_PANEL, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_SHOP, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_ITEMS, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_QUICKBUY, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_COURIER, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_PROTECT, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_INVENTORY_GOLD, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_SHOP_SUGGESTEDITEMS, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_TOP_MENU_BUTTONS, false)
-    mode:SetHUDVisible(DOTA_HUD_VISIBILITY_KILL_CAM, false)
+    local hudElements = {
+        DOTA_HUD_VISIBILITY_TOP_TIMEOFDAY,
+        DOTA_HUD_VISIBILITY_TOP_HEROES,
+        DOTA_HUD_VISIBILITY_TOP_SCOREBOARD,
+        DOTA_HUD_VISIBILITY_ACTION_PANEL,
+        DOTA_HUD_VISIBILITY_ACTION_MINIMAP,
+        DOTA_HUD_VISIBILITY_INVENTORY_PANEL,
+        DOTA_HUD_VISIBILITY_INVENTORY_SHOP,
+        DOTA_HUD_VISIBILITY_INVENTORY_ITEMS,
+        DOTA_HUD_VISIBILITY_INVENTORY_QUICKBUY,
+        DOTA_HUD_VISIBILITY_INVENTORY_COURIER,
+        DOTA_HUD_VISIBILITY_INVENTORY_PROTECT,
+        DOTA_HUD_VISIBILITY_INVENTORY_GOLD,
+        DOTA_HUD_VISIBILITY_SHOP_SUGGESTEDITEMS,
+        DOTA_HUD_VISIBILITY_TOP_MENU_BUTTONS,
+        DOTA_HUD_VISIBILITY_KILL_CAM,
+    }
+    for _, element in pairs(hudElements) do
+        if element ~= nil then
+            mode:SetHUDVisible(element, false)
+        end
+    end
 
     self.match3Games = {}
 
