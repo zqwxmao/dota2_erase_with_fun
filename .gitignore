@@ -1,0 +1,4 @@
+node_modules/
+content/panorama/scripts/custom_game/*.js
+tools_thumbnail_cache.sqlite3
+tools_asset_info.bin

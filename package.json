@@ -1,0 +1,26 @@
+{
+  "name": "dota2_erase_with_fun",
+  "version": "1.0.0",
+  "description": "Dota 2 英雄消消乐 - 游廊自定义游戏",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zqwxmao/dota2_erase_with_fun.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/zqwxmao/dota2_erase_with_fun/issues"
+  },
+  "homepage": "https://github.com/zqwxmao/dota2_erase_with_fun#readme",
+  "devDependencies": {
+    "panorama-types": "^1.6.1",
+    "typescript": "^6.0.3"
+  }
+}

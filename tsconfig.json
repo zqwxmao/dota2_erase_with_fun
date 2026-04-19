@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "none",
+    "lib": ["ES2017"],
+    "types": ["panorama-types"],
+    "outDir": "./content/panorama/scripts/custom_game",
+    "rootDir": "./src/panorama",
+    "strict": true,
+    "noImplicitAny": true,
+    "sourceMap": false,
+    "declaration": false,
+    "skipLibCheck": true,
+    "ignoreDeprecations": "6.0"
+  },
+  "include": ["src/panorama/**/*.ts"]
+}
