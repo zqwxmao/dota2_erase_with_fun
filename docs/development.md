@@ -7,7 +7,7 @@ src/panorama/match3_ui.ts    ← 编辑此文件
         │
         ▼  tsc (npm run build / npm run watch)
         │
-panorama/scripts/custom_game/match3_ui.js  ← 编译输出（不要手动编辑，已 gitignore）
+panorama/scripts/custom_game/match3_ui.js  ← 编译输出（已纳入版本控制，不要手动编辑）
 ```
 
 ### 关键 tsconfig 配置
@@ -26,6 +26,8 @@ panorama/scripts/custom_game/match3_ui.js  ← 编译输出（不要手动编辑
 npm run build    # 单次编译
 npm run watch    # 监听模式，修改后自动编译
 ```
+
+> **Windows 用户**：编译产物 `match3_ui.js` 已提交到仓库，无需安装 Node.js 即可直接将项目复制到 Dota 2 Addon 目录运行。修改 `.ts` 源码后需要在有 Node.js 的环境重新编译并提交。
 
 ## 日常开发步骤
 
